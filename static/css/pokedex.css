@@ -1,0 +1,43 @@
+.container {
+    display: flex;
+    align-items: center;
+}
+
+.flex-buffer {
+    flex: 1;
+}
+
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    border: solid black;
+    border-width: 0 1px 1px 0;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+
+    border: solid black;
+    border-width: 1px 0 0 1px;
+    height: 150px;
+    width: 130px;
+}
+
+.picture {
+    flex: 1;
+}
+
+.footer {
+    display: flex;
+}
+
+.index {
+    background: #789ebd;
+    padding: 2px;
+}
+
+.name {
+    padding: 2px;
+}
