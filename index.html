@@ -34,9 +34,12 @@
 
         var Pokedex = {
             view: function() {
-                return m('.grid-container', model.pokemon.map(function(pokemon) {
-                    return m(Pokemon, {pokemon: pokemon});
-                }));
+                return m('.grid-container', [
+                    model.pokemon.map(function(pokemon) {
+                        return m(Pokemon, {pokemon: pokemon});
+                    }),
+                    m('.grid-fill-text', 'Pokedex'),
+                ]);
             },
         }
 
@@ -63,7 +66,7 @@
         }
 
         function _image_url(pokemon) {
-            return 'static/img/' + _url_to_index(pokemon.url) + '.png';
+            return 'static/img/' + _url_to_index(pokemon.url).padStart(3, '0') + _format_name(pokemon.name) + '.png';
         }
     </script>
 </body<
