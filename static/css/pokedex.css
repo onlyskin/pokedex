@@ -1,10 +1,11 @@
 body {
     font-family: 'Saira Semi Condensed', sans-serif;
+    background: #f2f2ed;
 }
 
 .container {
     display: flex;
-    align-items: center;
+    justify-content: center;
 }
 
 .flex-buffer {
@@ -12,11 +13,20 @@ body {
 }
 
 .grid-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(9, 130px);
 
-    border: solid #bdbdbd;
-    border-width: 0 1px 1px 0;
+    border: 1px solid #bdbdbd;
+    background: #f9f9f6;
+}
+
+.grid-fill-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    grid-column: 8 / 10;
+    font-size: 40px;
 }
 
 .card {
@@ -24,9 +34,8 @@ body {
     flex-direction: column;
 
     border: solid #bdbdbd;
-    border-width: 1px 0 0 1px;
+    border-width: 0 1px 1px 0;
     height: 150px;
-    width: 130px;
 }
 
 .picture {
