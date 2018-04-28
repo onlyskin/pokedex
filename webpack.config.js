@@ -17,11 +17,10 @@ module.exports = {
     },
     devtool: 'source-map',
     plugins: [
-        new CleanWebpackPlugin(["bin"]),
         new HtmlWebpackPlugin(),
         new CopyWebpackPlugin([
             { from: 'src/data.json', to: 'data.json' },
-            { from: 'src/img/', to: 'img/' },
+            // { from: 'src/img/', to: 'img/' },
         ]),
     ],
 }

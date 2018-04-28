@@ -1,0 +1,7 @@
+- see if we can pick the order of the labels in the stat chart - from top clockwise: speed, sp att, sp def, hp, def, att
+- scrape all the rest of the images
+- make move component to display learnset
+- make nice type component to display types (symbols?/colors)
+- improve name and number components
+- add search to filter for certain types or moves
+- add comparison to compare two pokemon side by side
