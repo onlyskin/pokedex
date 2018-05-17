@@ -1,8 +1,7 @@
-import m from 'mithril';
-import './pokedex.css';
+import * as m from 'mithril';
 import {Pokedex} from 'pokeapi-js-wrapper';
-const radar = require('svg-radar-chart')
-const stringify = require('virtual-dom-stringify');
+import * as radar from 'svg-radar-chart';
+import * as stringify from 'virtual-dom-stringify';
 
 const pokedex = new Pokedex({
     protocol: 'https',
@@ -10,7 +9,40 @@ const pokedex = new Pokedex({
     timeout: 60 * 1000,
 });
 
-function shortStatName(name) {
+type Stat = "attack" | "special-attack" | "defense" | "special-defense" | "speed" | "hp";
+
+type StatMap = {[S in Stat]: string | number};
+
+type Type = "Normal" | "Fire" | "Fighting" | "Water" | "Flying" | "Grass" | "Poison" | "Electric" | "Ground" | "Psychic" | "Rock" | "Ice" | "Bug" | "Dragon" | "Ghost" | "Dark" | "Steel" | "Fairy";
+
+interface Pokemon {
+    name: string;
+    stats: IPokemonStat[];
+    types: IPokemonType[];
+};
+
+interface IPokemonStat {
+    base_stat: number;
+    effort: number;
+    stat: IStat;
+};
+
+interface IStat {
+    name: Stat;
+    url: string;
+};
+
+interface IPokemonType {
+    slot: 1 | 2;
+    type: IType;
+};
+
+interface IType {
+    name: Type;
+    url: string;
+}
+
+function shortStatName(name: Stat): string {
     return {
         "attack": "att",
         "special-attack": "sp-att",
@@ -21,15 +53,24 @@ function shortStatName(name) {
     }[name];
 }
 
-function makeRadarObj(stats, processFunc) {
-    return stats.reduce((acc, curr) => {
+function makeRadarObj(
+    stats: IPokemonStat[],
+    processFunc: (pokemonStat: IPokemonStat) => string | number,
+): StatMap {
+    return stats.reduce((acc: StatMap, curr: IPokemonStat) => {
         return Object.assign(acc, {[curr.stat.name]: processFunc(curr)});
-    }, {});
+    }, {} as StatMap);
 }
 
-function statsChart(pokemon) {
-    const captions = makeRadarObj(pokemon.stats, (curr) => shortStatName(curr.stat.name));
-    const stats = makeRadarObj(pokemon.stats, (curr) => curr.base_stat/255);
+function statsChart(pokemon: Pokemon) {
+    const captions: StatMap = makeRadarObj(
+        pokemon.stats,
+        (curr: IPokemonStat) => shortStatName(curr.stat.name),
+    );
+    const stats: StatMap = makeRadarObj(
+        pokemon.stats,
+        (curr: IPokemonStat) => curr.base_stat/255,
+    );
     return radar(
         captions,
         [stats],
@@ -51,23 +92,32 @@ function statsChart(pokemon) {
     );
 }
 
-const model = {
-    pokemon: [],
-    range: 386,
-}
+interface IModel {
+    pokemon: Pokemon[];
+    range: number;
+};
+
+const model: IModel = {
+    pokemon: [] as Pokemon[],
+    range: 151,
+};
+
 getPokemonData(model);
 
-function getPokemonData(model) {
-    [...Array(model.range).keys()].map((index) => {
+function getPokemonData(model: IModel): void {
+    [...Array(model.range).keys()].map((index: number) => {
         pokedex.resource('/api/v2/pokemon/' + (index + 1))
-            .then((r) => {
+            .then((r: Pokemon) => {
                 model.pokemon[index] = r;
                 m.redraw();
             });
     });
-};
+}
 
-const Picture = {
+const Picture: m.Component<{
+    number: number;
+    pokemon: Pokemon;
+}, {}> = {
     view: (vnode) => {
         return m('.picture', m('img', {
             src: _image_url(
@@ -78,20 +128,21 @@ const Picture = {
         }));
     },
 };
+console.log(Picture);
 
-const Name = {
+const Name: m.Component<{pokemon: Pokemon}, {}> = {
     view: (vnode) => {
         return m('.name', _format_name(vnode.attrs.pokemon.name));
     },
 };
 
-const HashNumber = {
+const HashNumber: m.Component<{number: number}, {}> = {
     view: (vnode) => {
         return m('.index', _format_index(vnode.attrs.number));
     },
 };
 
-const Types = {
+const Types: m.Component<{pokemon: Pokemon}, {}> = {
     view: (vnode) => {
         return m(
             '.types',
@@ -101,8 +152,9 @@ const Types = {
         );
     },
 };
+console.log(Types);
 
-const Chart = {
+const Chart: m.Component<{pokemon: Pokemon}, {}> = {
     oncreate: (vnode) => {
         vnode.dom.innerHTML = stringify(
             statsChart(vnode.attrs.pokemon),
@@ -114,7 +166,6 @@ const Chart = {
         );
     },
     view: (vnode) => {
-        console.log(vnode.attrs.pokemon.stats);
         return m(
             'svg.chart',
             {
@@ -125,51 +176,54 @@ const Chart = {
             },
         );
     },
-}
+};
 
-const Pokemon = {
+const Pokemon: m.Component<{
+    number: number;
+    pokemon: Pokemon;
+}, {}> = {
     view: (vnode) => {
         const number = vnode.attrs.number;
         const pokemon = vnode.attrs.pokemon;
         return m('.card', [
             // m(Picture, {number: number, pokemon: pokemon}),
             // m(Types, {pokemon: pokemon}),
-            m(Chart, {pokemon: pokemon}),
+            m(Chart, { pokemon }),
             m('.footer', [
-                m(HashNumber, {number: number}),
-                m(Name, {pokemon: pokemon}),
+                m(HashNumber, { number }),
+                m(Name, { pokemon }),
             ]),
         ]);
     },
-}
+};
 
-const Dex = {
-    view: () => {
+const Dex: m.Component<{model: IModel}, {}> = {
+    view: (vnode) => {
         return m('.grid-container', [
-            model.pokemon.map(function(pokemon, index) {
-                return m(Pokemon, {pokemon: pokemon, number: index + 1});
+            vnode.attrs.model.pokemon.map(function(pokemon, index) {
+                return m(Pokemon, { pokemon, number: index + 1 });
             }),
             m('.grid-fill-text', 'Pokedex'),
         ]);
     },
-}
+};
 
-const Page = {
+const Page: m.Component<{}, {}> = {
     view: () => {
-        return m('.container', m(Dex));
+        return m('.container', m(Dex, { model }));
     },
-}
+};
 
 m.mount(document.body, Page);
 
-function _format_index(number) {
+function _format_index(number: number): string {
     return '#' + number.toString().padStart(3, '0');
 }
 
-function _format_name(name) {
+function _format_name(name: string): string {
     return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
-function _image_url(number, name) {
+function _image_url(number: number, name: string): string {
     return 'img/' + number.toString().padStart(3, '0') + _format_name(name) + '.png';
 }

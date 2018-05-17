@@ -1,47 +1,18 @@
 {
   "name": "pokedex",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-  "watch": {
-    "build": {
-      "patterns": [
-        "src"
-      ],
-      "extensions": [
-        "js"
-      ]
-    }
-  },
-  "scripts": {
-    "build": "webpack",
-    "test": "jasmine",
-    "watch-build": "npm-watch build",
-    "watch-test": "npm-watch test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/onlyskin/pokedex.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/onlyskin/pokedex/issues"
-  },
-  "homepage": "https://github.com/onlyskin/pokedex#readme",
-  "devDependencies": {
-    "clean-webpack-plugin": "^0.1.19",
-    "copy-webpack-plugin": "^4.5.1",
-    "css-loader": "^0.28.11",
-    "html-webpack-plugin": "^3.2.0",
+  "repository": "https://github.com/onlyskin/muchuu",
+  "author": "Sam Szreter <s.szreter@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^2.8.3",
+    "@types/mithril": "^1.1.12",
     "jasmine": "^3.1.0",
-    "mithril": "^1.1.6",
-    "npm-watch": "^0.3.0",
-    "pokeapi-js-wrapper": "^1.1.1",
-    "style-loader": "^0.21.0",
+    "browserify": "^16.2.2",
     "svg-radar-chart": "^0.2.0",
     "virtual-dom-stringify": "^3.0.1",
-    "webpack": "^4.6.0",
-    "webpack-cli": "^2.0.15"
+    "pokeapi-js-wrapper": "^1.1.1",
+    "mithril": "^1.1.6"
   }
 }
