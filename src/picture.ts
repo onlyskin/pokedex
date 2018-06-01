@@ -1,5 +1,4 @@
 import * as m from 'mithril';
-import { format_name } from './format';
 import { Pokemon } from './pokeapi_data';
 
 const Picture: m.Component<{
@@ -8,7 +7,8 @@ const Picture: m.Component<{
 }, {}> = {
     view: (vnode) => {
         return m('.picture', m('img', {
-            src: _image_url(
+            src: 'sprites/img_trans.gif',
+            style: _image_url(
                 vnode.attrs.number,
                 vnode.attrs.pokemon.name,
             ),
@@ -17,7 +17,9 @@ const Picture: m.Component<{
 };
 
 function _image_url(number: number, name: string): string {
-    return 'img/' + number.toString().padStart(3, '0') + format_name(name) + '.png';
+    const offsetX = ((number - 1) % 15) * -100;
+    const offsetY = (Math.floor((number - 1) / 15)) * -100;
+    return "background: url('sprites/out.jpg') " + offsetX + "px " + offsetY + "px;";
 }
 
 export { Picture };
