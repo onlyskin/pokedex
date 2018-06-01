@@ -12,4 +12,4 @@ $BROWSERIFY -o $OUT/index.bundle.js $OUT/index.js
 
 rsync -a html/ $OUT
 rsync -a css/ $OUT
-rsync -a img/ $OUT/img
+rsync -a sprites/ $OUT/sprites
