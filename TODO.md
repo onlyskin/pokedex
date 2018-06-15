@@ -1,3 +1,8 @@
+- images
+    - fix the issue with the white background on the sprites
+    - fix the resolution issue with the sprites (we want high resolution, low image size, or output at higher size with montage and somehow scale/zoom the sprite)
+    - fix the issue with slight extra border space on sprites causing misalignment
+
 - see if we can pick the order of the labels in the stat chart - from top clockwise: speed, sp att, sp def, hp, def, att
 - scrape all the rest of the images
 - make move component to display learnset

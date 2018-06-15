@@ -59,10 +59,6 @@ body {
     justify-content: center;
 }
 
-.picture img {
-    height: 100px;
-}
-
 .footer {
     padding: 5px;
     display: flex;

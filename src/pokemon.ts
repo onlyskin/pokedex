@@ -12,7 +12,7 @@ const PokemonCell: m.Component<{
         const number = vnode.attrs.number;
         const pokemon = vnode.attrs.pokemon;
         return m('.card', [
-            m(Picture, {number: number, pokemon: pokemon}),
+            m(Picture, {index: number}),
             // m(Types, {pokemon: pokemon}),
             m(Chart, { pokemon }),
             m('.footer', [
