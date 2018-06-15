@@ -10,3 +10,4 @@
 - improve name and number components
 - add search to filter for certain types or moves
 - add comparison to compare two pokemon side by side
+- remove reference to 'm' from src/pokeapi_data.ts
