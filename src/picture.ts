@@ -1,27 +1,38 @@
 import * as m from 'mithril';
-import { Pokemon } from './pokeapi_data';
 
-const IMG_SIZE: number = 431;
+const SPRITE_COLUMNS: number = 15;
+const IMAGE_SIZE: number = 150;
+const SPRITE_URL = 'https://s3.eu-west-2.amazonaws.com/pokemon-sprite-sheets/out.png';
 
 const Picture: m.Component<{
-    number: number;
-    pokemon: Pokemon;
+    index: number;
 }, {}> = {
     view: (vnode) => {
         return m('.picture', m('img', {
-            src: 'sprites/img_trans.gif',
-            style: _image_url(
-                vnode.attrs.number,
-                vnode.attrs.pokemon.name,
+            src: 'img_trans.gif',
+            style: imageStyles(
+                vnode.attrs.index,
             ),
         }));
     },
 };
 
-function _image_url(number: number, name: string): string {
-    const offsetX = ((number - 1) % 15) * -IMG_SIZE;
-    const offsetY = (Math.floor((number - 1) / 15)) * -IMG_SIZE;
-    return "background: url('sprites/out.png') " + offsetX + "px " + offsetY + "px;";
+function imageStyles(index: number): string {
+    return `background: ${backgroundStyle(index)}; height: ${IMAGE_SIZE}px;`;
+}
+
+function backgroundStyle(index: number) {
+    const offsetX = xSpriteOffset(index);
+    const offsetY = ySpriteOffset(index);
+    return `url('${SPRITE_URL}') ${offsetX}px ${offsetY}px / ${SPRITE_COLUMNS * 100}%`;
+}
+
+function xSpriteOffset(index: number) {
+    return ((index - 1) % SPRITE_COLUMNS) * - IMAGE_SIZE;
+}
+
+function ySpriteOffset(index: number) {
+    return (Math.floor((index - 1) / SPRITE_COLUMNS)) * -IMAGE_SIZE;
 }
 
 export { Picture };
