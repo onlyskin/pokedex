@@ -1,2 +1,7 @@
 SIZE=$1
-montage 'img/*.png' -geometry $SIZEx$SIZE -tile 15x -background transparent sprite_sheet.png
+GEOMETRY=$SIZE'x'$SIZE'\>'
+echo $GEOMETRY
+montage 'img/*.png' -geometry 150x150\> -tile 15x -background transparent sprite_sheet.png
+
+# GOOD MONTAGE COMMAND
+# montage 'img/*.png' -geometry 150x150\> -tile 15x -background transparent sprite_sheet.png
