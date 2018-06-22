@@ -18,6 +18,3 @@ any files in `html/` or `css/`.)
 Serve and watch locally using `serveit -s out "./build.sh"`. This will serve
 the `out/` dir on `localhost:8000` and rerun the build script whenever the site
 is requested and files have changed.
-
-## To generate a sprite sheet, put `.png` images in `img/` and run:
-`./make_sprites.sh SIZE` (`SIZE` is the size to scale each image to)

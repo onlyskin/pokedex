@@ -2,7 +2,7 @@ import * as m from 'mithril';
 
 const SPRITE_COLUMNS: number = 15;
 const IMAGE_SIZE: number = 150;
-const IMAGE_SET: string = 'official';
+const IMAGE_SET: string = 'yellow';
 const SPRITE_URL = `https://s3.eu-west-2.amazonaws.com/pokemon-sprite-sheets/${IMAGE_SET}.png`;
 
 const Picture: m.Component<{
